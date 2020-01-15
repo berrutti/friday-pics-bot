@@ -1,4 +1,7 @@
-function getTodayString() {
+const fs = require('fs').promises;
+const reddit = require('./reddit');
+
+exports.getTodayString = function() {
   return new Date().toISOString().split('T')[0]
 }
 
@@ -11,7 +14,7 @@ function shuffleArray(array) {
 }
 
 function getPageHeader(imageUrl) {
-  const todayString = getTodayString();
+  const todayString = exports.getTodayString();
 
   return `---\n` +
     `title: "Picdump for ${new Date().toDateString()}"\n` +
@@ -39,12 +42,11 @@ function buildPage(posts) {
 };
 
 function writeFile(page) {
-  const fileName = `./${getTodayString()}.md`;
-  const fs = require('fs').promises;
+  const path = `${process.env.POSTS_DIRECTORY}/${exports.getTodayString()}.md`;
   return new Promise((resolve, reject) => {
-    fs.writeFile(fileName, page)
+    fs.writeFile(path, page)
       .then(() => {
-        resolve(fileName);
+        resolve(path);
       })
       .catch(() => {
         reject('Could not write file');
@@ -53,8 +55,6 @@ function writeFile(page) {
 }
 
 exports.createNewPostsFile = function () {
-  const reddit = require('./reddit');
-
   return reddit
     .getTopPostsArray()
     .then(array => {

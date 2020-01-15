@@ -1,7 +1,10 @@
 const simpleGit = require('simple-git/promise');
+const git = simpleGit(process.env.REPO_DIRECTORY).silent(true);
+
+const files = require('./files');
+const fs = require('fs');
 
 function isAlreadyCloned(directory) {
-  const fs = require('fs');
   let files = [];
   try {
     files = fs.readdirSync(directory);
@@ -10,24 +13,17 @@ function isAlreadyCloned(directory) {
   }
   return files.length !== 0;
 }
-
-function cloneRepo() {
+exports.pullOrClone = function () {
+  if (isAlreadyCloned(process.env.REPO_DIRECTORY)) {
+    return git.pull(process.env.REMOTE);
+  }
   return simpleGit().clone(process.env.REMOTE, process.env.REPO_DIRECTORY);
 }
 
-function pullRepo() {
-  return simpleGit(process.env.REPO_DIRECTORY).pull(process.env.REMOTE);
-}
-
-exports.pullOrClone = function () {
-  if (isAlreadyCloned(process.env.REPO_DIRECTORY)) {
-    return pullRepo();
-  }
-  return cloneRepo();
-}
-
 exports.pushNewFile = function (file) {
-  return new Promise((resolve, reject) => {
-    resolve(file);
-  });
+  console.log(`Pushing file: ${file}`);
+  Promise.resolve()
+    .then(()=>git.add('./*'))
+    .then(()=>git.commit(files.getTodayString()))
+    .then(()=>git.push('origin', 'master'));
 }

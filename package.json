@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "An automated NodeJS app to fetch and push pictures",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node main.js"
   },
   "repository": {
     "type": "git",

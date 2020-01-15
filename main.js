@@ -2,13 +2,11 @@ require('dotenv').config();
 const files = require('./utils/files');
 const git = require('./utils/git');
 
-git
-  .pullOrClone()
+git.pullOrClone()
   .then(files.createNewPostsFile)
-  .then(file => {
-    return git.pushNewFile(file)
+  .then(filename => {
+    git.pushNewFile(filename)
   })
-  .then(result => console.log(result))
   .catch(error => {
     console.error(error);
   });
