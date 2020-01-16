@@ -13,9 +13,19 @@ function isAlreadyCloned(directory) {
   }
   return files.length !== 0;
 }
+
+function createFolder() {
+  if (!fs.existsSync(process.env.REPO_DIRECTORY)){
+    fs.mkdirSync(process.env.REPO_DIRECTORY);
+  }
+}
+
 exports.pullOrClone = function () {
   if (isAlreadyCloned(process.env.REPO_DIRECTORY)) {
     return git.pull(process.env.REMOTE);
+  } else {
+    createFolder();
+    return simpleGit().clone(process.env.REMOTE, process.env.REPO_DIRECTORY);
   }
   return simpleGit().clone(process.env.REMOTE, process.env.REPO_DIRECTORY);
 }
