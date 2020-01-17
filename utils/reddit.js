@@ -45,7 +45,8 @@ exports.getTopPostsArray = function() {
     r.getTop('AdviceAnimals', options),
     r.getTop('pics', options),
     r.getTop('hmmm', options),
-    r.getTop('Eyebleach', options)
+    r.getTop('Eyebleach', options),
+    r.getTop('memes', options),
   ];
 
   return Promise.all(topRedditPosts).then(getImagePosts);

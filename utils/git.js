@@ -27,7 +27,6 @@ exports.pullOrClone = function () {
     createFolder();
     return simpleGit().clone(process.env.REMOTE, process.env.REPO_DIRECTORY);
   }
-  return simpleGit().clone(process.env.REMOTE, process.env.REPO_DIRECTORY);
 }
 
 exports.pushNewFile = function (file) {
