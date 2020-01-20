@@ -14,14 +14,18 @@ const options = {
 }
 
 function isImagePost(url) {
-  return url.endsWith('jpg') || url.endsWith('png') || url.endsWith('gif')
+  return url.endsWith('jpg') || url.endsWith('png') || url.endsWith('gif');
+}
+
+function isAlreadyPosted(url) {
+  return false;
 }
 
 function getImagePosts(topPostsArray) {
   const posts = [];
   topPostsArray.forEach(topPosts => {
     topPosts.forEach(post => {
-      if (isImagePost(post.url) && post.title.length < 50) {
+      if (isImagePost(post.url)) {
         posts.push({
           title: post.title,
           url: post.url,
