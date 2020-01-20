@@ -1,8 +1,13 @@
 const fs = require('fs').promises;
 const reddit = require('./reddit');
 
-exports.getTodayString = function() {
+exports.getTodayString = function () {
   return new Date().toISOString().split('T')[0]
+}
+
+function getTodayLongString() {
+  const date = new Date().toDateString();
+  return date.substr(date.indexOf(' ') + 1);
 }
 
 function getMostUpvotedPost(posts) {
@@ -17,10 +22,15 @@ function getPageHeader(imageUrl) {
   const todayString = exports.getTodayString();
 
   return `---\n` +
-    `title: "Picdump for ${new Date().toDateString()}"\n` +
+    `title: "${getTodayLongString()}"\n` +
     `date: ${todayString}\n` +
     `image: ${imageUrl}\n` +
     `---\n\n`;
+}
+
+function sanitizeString(string) {
+  const cleanArray = string.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "");
+  return cleanArray.trim();
 }
 
 function buildPage(posts) {
@@ -31,11 +41,11 @@ function buildPage(posts) {
   const shuffledPosts = shuffleArray(posts);
 
   shuffledPosts.forEach(post => {
+    const title = sanitizeString(post.title);
     pageBody = pageBody +
-      `## ${post.title}\n` +
-      `<a href="https://www.reddit.com${post.permalink}">\n` +
-      `<img src="${post.url}" alt="OP: ${post.op}" title="OP: ${post.op}" />\n` +
-      `</a>\n\n`;
+      `<a href="https://www.reddit.com${post.permalink}">@${post.op}</a>\n` +
+      `<img src="${post.url}" alt="${title}" title="${title}" />\n` +
+      `\n\n`;
   });
 
   return pageHeader + pageBody;
