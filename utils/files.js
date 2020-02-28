@@ -44,7 +44,7 @@ function buildPage(posts) {
     const title = sanitizeString(post.title);
     pageBody = pageBody +
       `<a href="https://www.reddit.com${post.permalink}">@${post.op}</a>\n` +
-      `<img src="${post.url}" alt="${title}" title="${title}" />\n` +
+      `<img class="post-img" src="${post.url}" alt="${title}" title="${title}" />\n` +
       `\n\n`;
   });
 
