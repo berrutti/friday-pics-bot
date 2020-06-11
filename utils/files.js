@@ -43,9 +43,23 @@ function buildPage(posts) {
   shuffledPosts.forEach(post => {
     const title = sanitizeString(post.title);
     pageBody = pageBody +
-      `<a href="https://www.reddit.com${post.permalink}">@${post.op}</a>\n` +
-      `<img class="post-img" src="${post.url}" alt="${title}" title="${title}" />\n` +
-      `\n\n`;
+      `<div class="card">\n` +
+      `  <div class="card-image">\n` +
+      `    <figure class="image">\n` +
+      `      <img class="post-img" src="${post.url}" alt="${title}" title="${title}" />\n` +
+      `    </figure>\n` +
+      `  </div>\n` +
+      `  <div class="card-content">\n` +
+      `    <div class="media">\n` +
+      `      <div class="media-content">\n` +
+      `        <p class="title is-4">\n` +
+      `           Title: <a href="https://www.reddit.com${post.permalink}">${title}</a>\n` +
+      `        </p>\n` +
+      `        <p class="subtitle is-6">Posted by: /u/${post.op}</p>\n` +
+      `      </div>\n` +
+      `    </div>\n` +
+      `  </div>\n` +
+      `</div>\n\n`;
   });
 
   return pageHeader + pageBody;
