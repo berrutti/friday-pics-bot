@@ -45,9 +45,7 @@ function buildPage(posts) {
     pageBody = pageBody +
       `<div class="card">\n` +
       `  <div class="card-image">\n` +
-      `    <figure class="image">\n` +
-      `      <img class="post-img" src="${post.url}" alt="${title}" title="${title}" />\n` +
-      `    </figure>\n` +
+      `    <img class="post-img" src="${post.url}" alt="${title}" title="${title}" />\n` +
       `  </div>\n` +
       `  <div class="card-content">\n` +
       `    <div class="media">\n` +
@@ -55,7 +53,7 @@ function buildPage(posts) {
       `        <p class="title is-4">\n` +
       `           Title: <a href="https://www.reddit.com${post.permalink}">${title}</a>\n` +
       `        </p>\n` +
-      `        <p class="subtitle is-6">Posted by: /u/${post.op}</p>\n` +
+      `        <p class="subtitle is-4">Posted by: /u/${post.op}</p>\n` +
       `      </div>\n` +
       `    </div>\n` +
       `  </div>\n` +
